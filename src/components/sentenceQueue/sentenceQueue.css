@@ -1,0 +1,18 @@
+.sentence-queue {
+  display: flex;
+  flex-direction: row;
+}
+
+.sentence-queue ul {
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+  padding: 10px;
+  margin: 5px;
+  gap: 10px;
+}
+
+.component li {
+  margin-right: 10px;
+  padding-right: 10px;
+}

@@ -1,56 +1,66 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import uifx from 'uifx';
+import { Howl } from 'howler';
 import hyvatKavijatAudio from './sfx/hyvat_instanssi-kavijat.ogg';
 import demokompoOnAudio from './sfx/demokompo_on.ogg';
 import alkamassaAudio from './sfx/alkamassa.ogg';
 import myohassaAudio from './sfx/myohassa.ogg';
+import SentenceQueue from './components/sentenceQueue/sentenceQueue';
+import SentencePool from './components/sentencePool/sentencePool';
 
-const hyvatKavijatPlayer = new uifx(
-  hyvatKavijatAudio,
-  /*{
-    volume: 1.0,
-    throttleMs: 100
-  } */
-)
+// const sounds = [
+//   {hyvatKavijatAudio},
+//   {demokompoOnAudio},
+//   {alkamassaAudio},
+//   {myohassaAudio}
+// ];
 
-const demokompoOnPlayer = new uifx(demokompoOnAudio)
-const alkamassaPlayer = new uifx(alkamassaAudio);
-const myohassaPlayer = new uifx(myohassaAudio);
 
-function playHyvatInstanssikavijatSound() {
-  console.log("playHyvatInstanssikavijatSound()");
-  hyvatKavijatPlayer.play();
+
+const sentencePool = [
+  { name: 'Hyvät Instanssi-kävijät!', sound: { hyvatKavijatAudio } },
+  { name: 'Demokompo on', sound: { demokompoOnAudio } },
+  { name: 'alkamassa', sound: { alkamassaAudio } },
+  { name: 'myöhässä', sound: { myohassaAudio } }
+];
+
+/**
+ * Play a sequence of sounds from a queue
+ */
+function playSoundSequence(queue, index) {
+  if (index < queue.length) {
+    const sound = new Howl({ src: [Object.values(queue[index].sound)][0] });
+    console.log(sound);
+    console.log(sound.play);
+    sound.play();
+    sound.on('end', () => {
+      console.log('Sound has finished playing. Add the next one with number: ', index+1)
+      playSoundSequence(queue, index + 1);
+    });
+  }
 }
-function playDemokompoOnSound() {
-  console.log("playDemokompoOnSound");
-  demokompoOnPlayer.play();
-}
-function playAlkamassaSound() {
-  console.log("playAlkamassaSound")
-  alkamassaPlayer.play();
-}
-function playMyohassaSound() {
-  console.log("playMyohassaSound")
-  myohassaPlayer.play();
-}
+
+
 
 function App() {
+  const [sentenceQueue, setSentenceQueue] = useState([]);
+
+  const addSoundToQueue = (sound) => {
+    console.log('Adding sound to queue: ', sound);
+    setSentenceQueue([...sentenceQueue, sound]);
+    console.log(sentenceQueue)
+  }
+
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <button onClick={playHyvatInstanssikavijatSound}>Hyvät Instanssi-kävijät</button><br />
-        <button onClick={playDemokompoOnSound}>Demokompo on</button><br />
-        <button onClick={playMyohassaSound}>myöhässä</button><br />
-
-        <button onClick={playAlkamassaSound}>alkamassa</button><br />
-        
-        
-
       </header>
-      
+      <SentenceQueue queue={sentenceQueue} />
+      <button onClick={() => setSentenceQueue([])}>Tyhjennä jono</button>
+      <SentencePool pool={sentencePool} callBack={addSoundToQueue} />
+      <button onClick={() => playSoundSequence(sentenceQueue, 0)}>Soita äänet peräkkäin</button><br />
     </div>
   );
 }
