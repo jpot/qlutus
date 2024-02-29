@@ -4,14 +4,22 @@ import React from 'react';
 const SentencePool = (props) => {
     return (
         <div>
-            <h1>Sentence Pool</h1>
-            <ul>
-                {props.pool.map((element, index) => (
-                    <li key={index}>
-                        <button onClick={() => props.callBack(element)}>{element.name}</button>
-                    </li>
-                ))}
-            </ul>
+            {props.pool.map((category, index) => {
+                return (
+                    <div key={index}>
+                        <h2>{category.category}</h2>
+                        <ul>
+                        {category.items.map((item, index) => {
+                                return (
+                                    <li key={index}>
+                                    <button onClick={() => props.callBack(item.sound)}>{item.name}</button>
+                                    </li>
+                                );
+                        })}
+                        </ul>
+                    </div>
+                );
+            })}
         </div>
     );
 };

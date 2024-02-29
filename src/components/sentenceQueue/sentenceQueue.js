@@ -9,7 +9,7 @@ const onClick = (soundElement) => {
 const SentenceQueue = (props) => {
     return (
         <div className='sentence-queue'>
-            <h1>Sentence Queue</h1>
+            <h2>Jono</h2>
             <ul>
                 {console.log(typeof queue)}
                 {props.queue.map((element, index) => (

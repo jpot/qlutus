@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import './App.css';
 import { Howl } from 'howler';
 import hyvatKavijatAudio from './sfx/hyvat_instanssi-kavijat.ogg';
@@ -19,32 +19,57 @@ import SentencePool from './components/sentencePool/sentencePool';
 
 
 const sentencePool = [
-  { name: 'Hyvät Instanssi-kävijät!', sound: { hyvatKavijatAudio } },
-  { name: 'Demokompo on', sound: { demokompoOnAudio } },
-  { name: 'alkamassa', sound: { alkamassaAudio } },
-  { name: 'myöhässä', sound: { myohassaAudio } }
-];
-
-/**
- * Play a sequence of sounds from a queue
- */
-function playSoundSequence(queue, index) {
-  if (index < queue.length) {
-    const sound = new Howl({ src: [Object.values(queue[index].sound)][0] });
-    console.log(sound);
-    console.log(sound.play);
-    sound.play();
-    sound.on('end', () => {
-      console.log('Sound has finished playing. Add the next one with number: ', index+1)
-      playSoundSequence(queue, index + 1);
-    });
+  {
+    category: 'Yleinen',
+    items: [
+      { name: 'Hyvät Instanssi-kävijät!', sound: hyvatKavijatAudio},
+      { name: 'Demokompo on', sound: demokompoOnAudio},
+      { name: 'alkamassa', sound: alkamassaAudio},
+      { name: 'myöhässä', sound: myohassaAudio}
+    ]
+  },
+  {
+    category: 'Kellonajat',
+    items: [
+      /*{ name: '0', sound: { nollaAudio } },
+      { name: '1', sound: { yksiAudio } },
+      { name: '2', sound: { kaksiAudio } },
+      { name: '3', sound: { kolmeAudio } },
+      { name: '4', sound: { neljaAudio } },
+      { name: '5', sound: { viisiAudio } },
+      { name: '6', sound: { kuusiAudio } },
+      { name: '7', sound: { seitsemanAudio } },
+      { name: '8', sound: { kahdeksanAudio } },
+      { name: '9', sound: { yhdeksanAudio } },
+      { name: '10', sound: { kymmenenAudio } },
+      { name: '11', sound: { yksitoistaAudio } },
+      { name: '12', sound: { kaksitoistaAudio } }, */
+    ]
   }
-}
+];
 
 
 
 function App() {
   const [sentenceQueue, setSentenceQueue] = useState([]);
+
+  let currentSound;
+
+  /**
+   * Play a sequence of sounds from a queue
+   */
+  function playSoundSequence(queue, index) {
+    if (index < queue.length) {
+      currentSound = new Howl({ src: [Object.values(queue[index].sound)][0] });
+      console.log(currentSound);
+      console.log(currentSound.play);
+      currentSound.play();
+      currentSound.on('end', () => {
+        console.log('Sound has finished playing. Add the next one with number: ', index+1)
+        playSoundSequence(queue, index + 1);
+      });
+    }
+  }
 
   const addSoundToQueue = (sound) => {
     console.log('Adding sound to queue: ', sound);
@@ -52,15 +77,20 @@ function App() {
     console.log(sentenceQueue)
   }
 
+  function stopAudio() {
+    currentSound.stop();
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
+      {/*<header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-      </header>
+      </header> */}
       <SentenceQueue queue={sentenceQueue} />
       <button onClick={() => setSentenceQueue([])}>Tyhjennä jono</button>
       <SentencePool pool={sentencePool} callBack={addSoundToQueue} />
       <button onClick={() => playSoundSequence(sentenceQueue, 0)}>Soita äänet peräkkäin</button><br />
+      <button onClick={stopAudio}>Pysäytä toisto</button>
     </div>
   );
 }
