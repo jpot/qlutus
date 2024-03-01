@@ -1,0 +1,10 @@
+.sentence-pool {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: left;
+    margin-right: 10px;
+    gap: 10px;
+    list-style-type: none;
+    flex-wrap: wrap;
+}

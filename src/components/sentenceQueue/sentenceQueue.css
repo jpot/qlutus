@@ -1,18 +1,29 @@
 .sentence-queue {
   display: flex;
   flex-direction: row;
-}
-
-.sentence-queue ul {
-  display: flex;
-  flex-direction: row;
+  flex-wrap: wrap;
   list-style-type: none;
   padding: 10px;
-  margin: 5px;
+  margin: 10px;
+  margin-right: 50px;
   gap: 10px;
+  min-height: 30px;
+  border: 2px solid darkgoldenrod;
+  background-color: #282c34;
 }
 
 .component li {
   margin-right: 10px;
   padding-right: 10px;
+}
+
+
+.clearbutton {
+  color: palegoldenrod;
+  background-color: darkred;
+  border-color: whitesmoke;
+  float: right;
+  clear: right;
+  margin-right: 20px;
+  margin-left: 20px;
 }

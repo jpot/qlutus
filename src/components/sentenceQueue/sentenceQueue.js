@@ -8,13 +8,14 @@ const onClick = (soundElement) => {
 };
 const SentenceQueue = (props) => {
     return (
-        <div className='sentence-queue'>
+        <div>
             <h2>Jono</h2>
-            <ul>
+            <button className="clearbutton" onClick={() => props.setSentenceQueue([])}>Tyhjennä jono</button>
+            <ul className='sentence-queue'>
                 {console.log(typeof queue)}
                 {props.queue.map((element, index) => (
                     <li key={index}>
-                        <button onClick={() => onClick(element.sound)}>{element.name}</button>
+                        <button onClick={() => onClick(element.sound)}>{element.name} 🔊</button>
                     </li>
                 ))}
             </ul>
