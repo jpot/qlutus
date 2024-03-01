@@ -12,7 +12,7 @@ const SentencePool = (props) => {
                         {category.items.map((item, index) => {
                                 return (
                                     <li key={index}>
-                                    <button onClick={() => props.callBack(item.sound)}>{item.name}</button>
+                                        <button onClick={() => props.callBack(item)}>{item.name}</button>
                                     </li>
                                 );
                         })}

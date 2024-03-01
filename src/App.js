@@ -22,10 +22,10 @@ const sentencePool = [
   {
     category: 'Yleinen',
     items: [
-      { name: 'Hyvät Instanssi-kävijät!', sound: hyvatKavijatAudio},
-      { name: 'Demokompo on', sound: demokompoOnAudio},
-      { name: 'alkamassa', sound: alkamassaAudio},
-      { name: 'myöhässä', sound: myohassaAudio}
+      { name: 'Hyvät Instanssi-kävijät!', sound: {hyvatKavijatAudio}},
+      { name: 'Demokompo on', sound: {demokompoOnAudio}},
+      { name: 'alkamassa', sound: {alkamassaAudio}},
+      { name: 'myöhässä', sound: {myohassaAudio}}
     ]
   },
   {
