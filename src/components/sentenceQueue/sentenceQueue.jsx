@@ -1,4 +1,3 @@
-import React from 'react';
 import { Howl } from 'howler';
 import './sentenceQueue.css';
 
@@ -11,8 +10,7 @@ const SentenceQueue = (props) => {
         <div>
             <h2>Jono</h2>
             <button className="clearbutton" onClick={() => props.setSentenceQueue([])}>Tyhjennä jono</button>
-            <ul className='sentence-queue'>
-                {console.log(typeof queue)}
+            <ul className='sentence-queue' aria-label="Jono">
                 {props.queue.map((element, index) => (
                     <li key={index}>
                         <button onClick={() => onClick(element.sound)}>{element.name} 🔊</button>

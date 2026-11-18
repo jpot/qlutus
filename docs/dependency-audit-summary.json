@@ -1,0 +1,106 @@
+{
+  "date": "2026-11-18",
+  "baselineCommit": "6890326",
+  "node": "22.23.2",
+  "npm": "10.9.8",
+  "before": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 10,
+      "moderate": 14,
+      "high": 38,
+      "critical": 3,
+      "total": 65
+    },
+    "lockedPackages": 1577
+  },
+  "after": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    },
+    "lockedPackages": 127,
+    "outdatedDirectDependencies": {}
+  },
+  "dependencies": [
+    {
+      "name": "howler",
+      "before": "2.2.4",
+      "after": "2.2.4",
+      "scope": "dependencies"
+    },
+    {
+      "name": "react",
+      "before": "16.12.0",
+      "after": "19.3.1",
+      "scope": "dependencies"
+    },
+    {
+      "name": "react-dom",
+      "before": "16.12.0",
+      "after": "19.3.1",
+      "scope": "dependencies"
+    },
+    {
+      "name": "@playwright/test",
+      "before": null,
+      "after": "1.65.1",
+      "scope": "devDependencies"
+    },
+    {
+      "name": "@testing-library/dom",
+      "before": "6.11.0",
+      "after": "10.4.2",
+      "scope": "devDependencies"
+    },
+    {
+      "name": "@testing-library/jest-dom",
+      "before": "4.2.4",
+      "after": "7.0.1",
+      "scope": "devDependencies"
+    },
+    {
+      "name": "@testing-library/react",
+      "before": "9.4.0",
+      "after": "16.3.3",
+      "scope": "devDependencies"
+    },
+    {
+      "name": "@testing-library/user-event",
+      "before": "7.2.1",
+      "after": "14.6.12",
+      "scope": "devDependencies"
+    },
+    {
+      "name": "@vitejs/plugin-react",
+      "before": null,
+      "after": "6.3.0",
+      "scope": "devDependencies"
+    },
+    {
+      "name": "jsdom",
+      "before": "16.7.0",
+      "after": "31.0.1",
+      "scope": "devDependencies"
+    },
+    {
+      "name": "vite",
+      "before": null,
+      "after": "8.3.8",
+      "scope": "devDependencies"
+    },
+    {
+      "name": "vitest",
+      "before": null,
+      "after": "5.1.1",
+      "scope": "devDependencies"
+    }
+  ],
+  "removedDirectDependencies": {
+    "react-scripts": "5.0.1"
+  }
+}

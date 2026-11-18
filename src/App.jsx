@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-//import logo from './logo.svg';
+import { useEffect, useRef, useState } from 'react';
 import './App.css';
 import { Howl } from 'howler';
 import SentenceQueue from './components/sentenceQueue/sentenceQueue';
@@ -311,41 +310,64 @@ const sentencePool = [
 function App() {
   const [sentenceQueue, setSentenceQueue] = useState([]);
 
-  let currentSound;
+  const currentSound = useRef(null);
+
+  function stopAudio() {
+    const sound = currentSound.current;
+    currentSound.current = null;
+    if (sound) {
+      sound.stop();
+      sound.unload();
+    }
+  }
+
+  useEffect(() => () => {
+    const sound = currentSound.current;
+    currentSound.current = null;
+    if (sound) {
+      sound.stop();
+      sound.unload();
+    }
+  }, []);
 
   /**
    * Play a sequence of sounds from a queue
    */
   function playSoundSequence(queue, index) {
     if (index < queue.length) {
-      currentSound = new Howl({ src: [Object.values(queue[index].sound)][0] });
-      console.log(currentSound);
-      console.log(currentSound.play);
-      currentSound.play();
-      currentSound.on('end', () => {
-        console.log('Sound has finished playing. Add the next one with number: ', index+1)
+      const sound = new Howl({ src: Object.values(queue[index].sound) });
+      currentSound.current = sound;
+      sound.once('end', () => {
+        // Ignore callbacks from playback that has been stopped or restarted.
+        if (currentSound.current !== sound) return;
+        currentSound.current = null;
+        sound.unload();
         playSoundSequence(queue, index + 1);
       });
+      const onError = () => {
+        if (currentSound.current === sound) stopAudio();
+      };
+      sound.once('loaderror', onError);
+      sound.once('playerror', onError);
+      sound.play();
     }
   }
 
   const addSoundToQueue = (sound) => {
-    console.log('Adding sound to queue: ', sound);
-    setSentenceQueue([...sentenceQueue, sound]);
-    console.log(sentenceQueue)
+    setSentenceQueue(queue => [...queue, sound]);
   }
 
-  function stopAudio() {
-    currentSound && currentSound.stop();
+  function playQueue() {
+    stopAudio();
+    playSoundSequence(sentenceQueue, 0);
   }
 
   return (
     <div className="App">
       <header className="App-header">
         <h1>Qlutus</h1>
-        {/*<img src={logo} className="App-logo" alt="logo" /> */}
         <div className="header-buttons">
-          <button className="playButton" disabled={sentenceQueue.length === 0} onClick={() => playSoundSequence(sentenceQueue, 0)}>⏵ TOISTA 🔊</button><br />
+          <button className="playButton" disabled={sentenceQueue.length === 0} onClick={playQueue}>⏵ TOISTA 🔊</button><br />
           <button className="stopButton" onClick={stopAudio}>Pysäytä toisto</button>
         </div>
       </header>
